@@ -149,6 +149,10 @@ location.href = location.href.replace('youzan.github.io', 'vant-ui.github.io');
                 path: 'toast',
                 title: 'Toast 轻提示',
               },
+              {
+                path: 'block',
+                title: 'Block 块级组件',
+              },
             ],
           },
           {
@@ -616,6 +620,10 @@ location.href = location.href.replace('youzan.github.io', 'vant-ui.github.io');
               {
                 path: 'toast',
                 title: 'Toast',
+              },
+              {
+                path: 'block',
+                title: 'Block',
               },
             ],
           },

@@ -1,0 +1,81 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render demo and match snapshot 1`] = `
+<div class="van-block">
+  <h2
+    class="van-block__title"
+  >
+    base
+  </h2>
+  <button
+    type="button"
+    class="van-button van-button--default van-button--normal"
+  >
+    <div class="van-button__content">
+      <span class="van-button__text">
+        Default
+      </span>
+    </div>
+  </button>
+  <button
+    type="button"
+    class="van-button van-button--primary van-button--normal"
+  >
+    <div class="van-button__content">
+      <span class="van-button__text">
+        Primary
+      </span>
+    </div>
+  </button>
+  <button
+    type="button"
+    class="van-button van-button--success van-button--normal"
+  >
+    <div class="van-button__content">
+      <span class="van-button__text">
+        Success
+      </span>
+    </div>
+  </button>
+</div>
+<div class="van-block">
+  <h2
+    class="van-block__title"
+    id="card"
+  >
+    card
+  </h2>
+  <div class="van-block__card">
+    <button
+      type="button"
+      class="van-button van-button--default van-button--normal"
+    >
+      <div class="van-button__content">
+        <span class="van-button__text">
+          Default
+        </span>
+      </div>
+    </button>
+    <button
+      type="button"
+      class="van-button van-button--primary van-button--normal"
+    >
+      <div class="van-button__content">
+        <span class="van-button__text">
+          Primary
+        </span>
+      </div>
+    </button>
+    <button
+      type="button"
+      class="van-button van-button--success van-button--normal"
+    >
+      <div class="van-button__content">
+        <span class="van-button__text">
+          Success
+        </span>
+      </div>
+    </button>
+  </div>
+</div>
+`;

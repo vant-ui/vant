@@ -1,0 +1,36 @@
+:root {
+  --van-block-title-padding: var(--van-padding-xl) var(--van-padding-md)
+    var(--van-padding-md);
+  --van-block-title-color: var(--van-doc-text-color-4);
+  --van-block-title-fint-size: var(--van-font-size-md);
+  --van-block-title-line-height: 16px;
+  --van-block-card-margin: var(--van-padding-md) var(--van-padding-md) 0;
+  --van-block-card-border-radius: var(--van-radius-lg);
+}
+
+.van-block {
+  &__title {
+    margin: 0;
+    padding: var(--van-block-title-padding);
+    color: var(--van-block-title-color);
+    font-weight: normal;
+    font-size: var(--van-block-title-fint-size);
+    line-height: var(--van-block-title-line-height);
+  }
+
+  &__card {
+    margin: var(--van-block-card-margin);
+    overflow: hidden;
+    border-radius: var(--van-block-card-border-radius);
+  }
+
+  &__title + &__card {
+    margin-top: 0;
+  }
+
+  &:first-of-type {
+    .van-block__title {
+      padding-top: 20px;
+    }
+  }
+}
