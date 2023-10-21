@@ -9,6 +9,7 @@
 
 <script>
 import { copyToClipboard } from '../../common';
+import { getCodeSandboxParams } from './getCodeSandboxParams';
 
 export default {
   name: 'VanDocContent',
@@ -96,6 +97,37 @@ export default {
             timer = null;
           }, 1400);
         });
+      }
+      const preBoxes = document.querySelectorAll('.van-doc-card pre');
+      if (!preBoxes || !preBoxes.length) {
+        return;
+      }
+      for (let i = 0; i < preBoxes.length; i++) {
+        const item = preBoxes[i];
+        if (i > 0 && item.children.length === 1) {
+          const form = document.createElement('form');
+          form.action = 'https://codesandbox.io/api/v1/sandboxes/define';
+          form.method = 'POST';
+          form.target = '_blank';
+          const input = document.createElement('input');
+          input.type = 'hidden';
+          input.name = 'parameters';
+          const params = getCodeSandboxParams(codeBoxes[i].innerText, {
+            title: `vant - demo`,
+          });
+          input.value = params;
+          const div = document.createElement('div');
+          div.innerHTML = `<svg focusable="false" data-icon="code-sandbox" width="1em" height="1em" fill="currentColor" aria-hidden="true" viewBox="64 64 896 896"><path d="M709.6 210l.4-.2h.2L512 96 313.9 209.8h-.2l.7.3L151.5 304v416L512 928l360.5-208V304l-162.9-94zM482.7 843.6L339.6 761V621.4L210 547.8V372.9l272.7 157.3v313.4zM238.2 321.5l134.7-77.8 138.9 79.7 139.1-79.9 135.2 78-273.9 158-274-158zM814 548.3l-128.8 73.1v139.1l-143.9 83V530.4L814 373.1v175.2z"></path></svg>`;
+          div.style.display = 'flex';
+          div.style.justifyContent = 'flex-end';
+          div.style.cursor = 'pointer';
+          form.appendChild(input);
+          form.appendChild(div);
+          item.appendChild(form);
+          item.addEventListener('click', () => {
+            form.submit();
+          });
+        }
       }
     },
   },

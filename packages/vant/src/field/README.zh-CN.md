@@ -25,20 +25,22 @@ app.use(CellGroup);
 
 ```html
 <!-- 可以使用 CellGroup 作为容器 -->
-<van-cell-group inset>
-  <van-field v-model="value" label="文本" placeholder="请输入用户名" />
-</van-cell-group>
-```
+<template>
+  <van-cell-group inset>
+    <van-field v-model="value" label="文本" placeholder="请输入用户名" />
+  </van-cell-group>
+</template>
 
-```js
-import { ref } from 'vue';
+<script>
+  import { ref } from 'vue';
 
-export default {
-  setup() {
-    const value = ref('');
-    return { value };
-  },
-};
+  export default {
+    setup() {
+      const value = ref('');
+      return { value };
+    },
+  };
+</script>
 ```
 
 ### 自定义类型
@@ -46,34 +48,36 @@ export default {
 根据 `type` 属性定义不同类型的输入框，默认值为 `text`。
 
 ```html
-<van-cell-group inset>
-  <!-- 输入任意文本 -->
-  <van-field v-model="text" label="文本" />
-  <!-- 输入手机号，调起手机号键盘 -->
-  <van-field v-model="tel" type="tel" label="手机号" />
-  <!-- 允许输入正整数，调起纯数字键盘 -->
-  <van-field v-model="digit" type="digit" label="整数" />
-  <!-- 允许输入数字，调起带符号的纯数字键盘 -->
-  <van-field v-model="number" type="number" label="数字" />
-  <!-- 输入密码 -->
-  <van-field v-model="password" type="password" label="密码" />
-</van-cell-group>
-```
+<template>
+  <van-cell-group inset>
+    <!-- 输入任意文本 -->
+    <van-field v-model="text" label="文本" />
+    <!-- 输入手机号，调起手机号键盘 -->
+    <van-field v-model="tel" type="tel" label="手机号" />
+    <!-- 允许输入正整数，调起纯数字键盘 -->
+    <van-field v-model="digit" type="digit" label="整数" />
+    <!-- 允许输入数字，调起带符号的纯数字键盘 -->
+    <van-field v-model="number" type="number" label="数字" />
+    <!-- 输入密码 -->
+    <van-field v-model="password" type="password" label="密码" />
+  </van-cell-group>
+</template>
 
-```js
-import { ref } from 'vue';
+<script>
+  import { ref } from 'vue';
 
-export default {
-  setup() {
-    const tel = ref('');
-    const text = ref('');
-    const digit = ref('');
-    const number = ref('');
-    const password = ref('');
+  export default {
+    setup() {
+      const tel = ref('');
+      const text = ref('');
+      const digit = ref('');
+      const number = ref('');
+      const password = ref('');
 
-    return { tel, text, digit, number, password };
-  },
-};
+      return { tel, text, digit, number, password };
+    },
+  };
+</script>
 ```
 
 ### 禁用输入框
@@ -81,10 +85,12 @@ export default {
 通过 `readonly` 将输入框设置为只读状态，通过 `disabled` 将输入框设置为禁用状态。
 
 ```html
-<van-cell-group inset>
-  <van-field label="文本" model-value="输入框只读" readonly />
-  <van-field label="文本" model-value="输入框已禁用" disabled />
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field label="文本" model-value="输入框只读" readonly />
+    <van-field label="文本" model-value="输入框已禁用" disabled />
+  </van-cell-group>
+</template>
 ```
 
 ### 显示图标
@@ -92,37 +98,39 @@ export default {
 通过 `left-icon` 和 `right-icon` 配置输入框两侧的图标，通过设置 `clearable` 在输入过程中展示清除图标。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="value1"
-    label="文本"
-    left-icon="smile-o"
-    right-icon="warning-o"
-    placeholder="显示图标"
-  />
-  <van-field
-    v-model="value2"
-    clearable
-    label="文本"
-    left-icon="music-o"
-    placeholder="显示清除图标"
-  />
-</van-cell-group>
-```
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="value1"
+      label="文本"
+      left-icon="smile-o"
+      right-icon="warning-o"
+      placeholder="显示图标"
+    />
+    <van-field
+      v-model="value2"
+      clearable
+      label="文本"
+      left-icon="music-o"
+      placeholder="显示清除图标"
+    />
+  </van-cell-group>
+</template>
 
-```js
 import { ref } from 'vue';
 
-export default {
-  setup() {
-    const value1 = ref('');
-    const value2 = ref('123');
-    return {
-      value1,
-      value2,
-    };
-  },
-};
+<script>
+  export default {
+    setup() {
+      const value1 = ref('');
+      const value2 = ref('123');
+      return {
+        value1,
+        value2,
+      };
+    },
+  };
+</script>
 ```
 
 ### 错误提示
@@ -130,22 +138,24 @@ export default {
 设置 `required` 属性表示这是一个必填项，可以配合 `error` 或 `error-message` 属性显示对应的错误提示。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="username"
-    error
-    required
-    label="用户名"
-    placeholder="请输入用户名"
-  />
-  <van-field
-    v-model="phone"
-    required
-    label="手机号"
-    placeholder="请输入手机号"
-    error-message="手机号格式错误"
-  />
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="username"
+      error
+      required
+      label="用户名"
+      placeholder="请输入用户名"
+    />
+    <van-field
+      v-model="phone"
+      required
+      label="手机号"
+      placeholder="请输入手机号"
+      error-message="手机号格式错误"
+    />
+  </van-cell-group>
+</template>
 ```
 
 ### 插入按钮
@@ -153,19 +163,21 @@ export default {
 通过 button 插槽可以在输入框尾部插入按钮。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="sms"
-    center
-    clearable
-    label="短信验证码"
-    placeholder="请输入短信验证码"
-  >
-    <template #button>
-      <van-button size="small" type="primary">发送验证码</van-button>
-    </template>
-  </van-field>
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="sms"
+      center
+      clearable
+      label="短信验证码"
+      placeholder="请输入短信验证码"
+    >
+      <template #button>
+        <van-button size="small" type="primary">发送验证码</van-button>
+      </template>
+    </van-field>
+  </van-cell-group>
+</template>
 ```
 
 ### 格式化输入内容
@@ -173,40 +185,42 @@ export default {
 通过 `formatter` 属性可以对输入的内容进行格式化，通过 `format-trigger` 属性可以指定执行格式化的时机，默认在输入时进行格式化。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="value1"
-    label="文本"
-    :formatter="formatter"
-    placeholder="在输入时执行格式化"
-  />
-  <van-field
-    v-model="value2"
-    label="文本"
-    :formatter="formatter"
-    format-trigger="onBlur"
-    placeholder="在失焦时执行格式化"
-  />
-</van-cell-group>
-```
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="value1"
+      label="文本"
+      :formatter="formatter"
+      placeholder="在输入时执行格式化"
+    />
+    <van-field
+      v-model="value2"
+      label="文本"
+      :formatter="formatter"
+      format-trigger="onBlur"
+      placeholder="在失焦时执行格式化"
+    />
+  </van-cell-group>
+</template>
 
-```js
-import { ref } from 'vue';
+<script>
+  import { ref } from 'vue';
 
-export default {
-  setup() {
-    const value1 = ref('');
-    const value2 = ref('');
-    // 过滤输入的数字
-    const formatter = (value) => value.replace(/\d/g, '');
+  export default {
+    setup() {
+      const value1 = ref('');
+      const value2 = ref('');
+      // 过滤输入的数字
+      const formatter = (value) => value.replace(/\d/g, '');
 
-    return {
-      value1,
-      value2,
-      formatter,
-    };
-  },
-};
+      return {
+        value1,
+        value2,
+        formatter,
+      };
+    },
+  };
+</script>
 ```
 
 ### 高度自适应
@@ -214,16 +228,18 @@ export default {
 对于 textarea，可以通过 `autosize` 属性设置高度自适应。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="message"
-    rows="1"
-    autosize
-    label="留言"
-    type="textarea"
-    placeholder="请输入留言"
-  />
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="message"
+      rows="1"
+      autosize
+      label="留言"
+      type="textarea"
+      placeholder="请输入留言"
+    />
+  </van-cell-group>
+</template>
 ```
 
 ### 显示字数统计
@@ -231,18 +247,20 @@ export default {
 设置 `maxlength` 和 `show-word-limit` 属性后会在底部显示字数统计。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="message"
-    rows="2"
-    autosize
-    label="留言"
-    type="textarea"
-    maxlength="50"
-    placeholder="请输入留言"
-    show-word-limit
-  />
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="message"
+      rows="2"
+      autosize
+      label="留言"
+      type="textarea"
+      maxlength="50"
+      placeholder="请输入留言"
+      show-word-limit
+    />
+  </van-cell-group>
+</template>
 ```
 
 ### 输入框内容对齐
@@ -250,14 +268,16 @@ export default {
 通过 `input-align` 属性可以设置输入框内容的对齐方式，可选值为 `center`、`right`。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="value"
-    label="文本"
-    placeholder="输入框内容右对齐"
-    input-align="right"
-  />
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="value"
+      label="文本"
+      placeholder="输入框内容右对齐"
+      input-align="right"
+    />
+  </van-cell-group>
+</template>
 ```
 
 ### 输入框文本位置
@@ -265,32 +285,34 @@ export default {
 通过 `label-align` 属性可以设置输入框文本的位置，可选值为 `center`、`right`、`top`。
 
 ```html
-<van-cell-group inset>
-  <van-field
-    v-model="value"
-    label="文本"
-    placeholder="顶部对齐"
-    label-align="top"
-  />
-  <van-field
-    v-model="value2"
-    label="文本"
-    placeholder="左对齐"
-    label-align="left"
-  />
-  <van-field
-    v-model="value3"
-    label="文本"
-    placeholder="居中对齐"
-    label-align="center"
-  />
-  <van-field
-    v-model="value4"
-    label="文本"
-    placeholder="右对齐"
-    label-align="right"
-  />
-</van-cell-group>
+<template>
+  <van-cell-group inset>
+    <van-field
+      v-model="value"
+      label="文本"
+      placeholder="顶部对齐"
+      label-align="top"
+    />
+    <van-field
+      v-model="value2"
+      label="文本"
+      placeholder="左对齐"
+      label-align="left"
+    />
+    <van-field
+      v-model="value3"
+      label="文本"
+      placeholder="居中对齐"
+      label-align="center"
+    />
+    <van-field
+      v-model="value4"
+      label="文本"
+      placeholder="右对齐"
+      label-align="right"
+    />
+  </van-cell-group>
+</template>
 ```
 
 ## API
