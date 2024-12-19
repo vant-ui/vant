@@ -13,6 +13,8 @@ const [createComponent, bem] = createNamespace('collapse-item');
 
 const CELL_SLOTS = ['title', 'icon', 'right-icon'];
 
+const DOUBLE_RAF_TIME = 32;
+
 export default createComponent({
   mixins: [ChildrenMixin('vanCollapse')],
 
@@ -27,6 +29,10 @@ export default createComponent({
     isLink: {
       type: Boolean,
       default: true,
+    },
+    expandInViewport: {
+      type: Boolean,
+      default: false,
     },
   },
 
@@ -83,6 +89,7 @@ export default createComponent({
       // Use raf: flick when opened in safari
       // Use nextTick: closing animation failed when set `user-select: none`
       const nextTick = expanded ? this.$nextTick : raf;
+      const { accordion } = this.parent;
 
       nextTick(() => {
         const { content, wrapper } = this.$refs;
@@ -99,6 +106,12 @@ export default createComponent({
           // use double raf to ensure animation can start
           doubleRaf(() => {
             wrapper.style.height = expanded ? contentHeight : 0;
+
+            // ensure that the expanded node during the expansion animation is not pushed out of the viewport
+            if (accordion && expanded && this.expandInViewport) {
+              const duration = this.getTransitionDuration(wrapper);
+              this.stayInViewport(Date.now() + duration);
+            }
           });
         } else {
           this.onTransitionEnd();
@@ -130,6 +143,51 @@ export default createComponent({
       }
     },
 
+    /**
+     * Get the transition duration
+     * @param {Element} el
+     */
+    getTransitionDuration(el) {
+      const computedStyle = window.getComputedStyle(el);
+      const duration = computedStyle.getPropertyValue('transition-duration');
+
+      // unit ms
+      const durationList = duration.split(',').map((timestr) => {
+        const coefficient = timestr.endsWith('ms') ? 1 : 1000;
+        return parseFloat(timestr) * coefficient;
+      });
+
+      return durationList.length ? Math.max(...durationList) : 0;
+    },
+
+    /**
+     * Keep the node within the viewport.
+     * @param {Number} endTime
+     */
+    stayInViewport(endTime) {
+      const currTime = Date.now();
+      const restTime = endTime - currTime;
+      const titleRef = this.$refs.title;
+
+      if (!titleRef || restTime <= -DOUBLE_RAF_TIME) return;
+
+      if (typeof titleRef.scrollIntoViewIfNeeded === 'function') {
+        titleRef.scrollIntoViewIfNeeded(false);
+      } else {
+        const rect = titleRef.getBoundingClientRect();
+
+        if (rect.top < 0) {
+          titleRef.scrollIntoView({
+            behavior: 'instant',
+          });
+        }
+      }
+
+      raf(() => {
+        this.stayInViewport(endTime);
+      });
+    },
+
     genTitle() {
       const { border, disabled, expanded } = this;
 
@@ -147,6 +205,7 @@ export default createComponent({
 
       return (
         <Cell
+          ref="title"
           role="button"
           class={bem('title', { disabled, expanded, borderless: !border })}
           onClick={this.onClick}

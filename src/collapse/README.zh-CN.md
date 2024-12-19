@@ -133,6 +133,7 @@ export default {
 | title-class | 左侧标题额外类名 | _string_ | - |
 | value-class | 右侧内容额外类名 | _string_ | - |
 | label-class | 描述信息额外类名 | _string_ | - |
+| expand-in-viewport | 是否在视口内展开 | _boolean_ | `false` |
 
 ### CollapseItem Slots
 

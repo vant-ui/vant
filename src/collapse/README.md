@@ -131,6 +131,7 @@ export default {
 | title-class | Title className | _string_ | - |
 | value-class | Value className | _string_ | - |
 | label-class | Label className | _string_ | - |
+| expand-in-viewport | Whether to expand inside viewport | _boolean_ | `false` |
 
 ### CollapseItem Slots
 
