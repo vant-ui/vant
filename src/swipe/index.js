@@ -146,6 +146,7 @@ export default createComponent({
     },
 
     minOffset() {
+      if (!this.rect) return 0;
       return (
         (this.vertical ? this.rect.height : this.rect.width) -
         this.size * this.count
@@ -155,6 +156,7 @@ export default createComponent({
 
   mounted() {
     this.bindTouchEvent(this.$refs.track);
+    this.autoPlay();
   },
 
   methods: {
@@ -384,7 +386,12 @@ export default createComponent({
       if (autoplay > 0 && this.count > 1) {
         this.clear();
         this.timer = setTimeout(() => {
-          this.next();
+          if (!this.rect) {
+            this.initialize();
+          }
+          if (this.rect) {
+            this.next();
+          }
           this.autoPlay();
         }, autoplay);
       }
