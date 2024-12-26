@@ -12,7 +12,7 @@ export function isEmptyValue(value: unknown) {
   if (Array.isArray(value)) {
     return !value.length;
   }
-  if (value === 0) {
+  if (value === 0 || typeof value === 'boolean') {
     return false;
   }
   return !value;
