@@ -10,10 +10,11 @@ Register component globally via `app.use`, refer to [Component Registration](#/e
 
 ```js
 import { createApp } from 'vue';
-import { RollingText } from 'vant';
+import { RollingText, RollingTextGroup } from 'vant';
 
 const app = createApp();
 app.use(RollingText);
+app.use(RollingTextGroup);
 ```
 
 ## Usage
@@ -93,6 +94,21 @@ The RollingText component provides some CSS variables that you can override to c
 }
 ```
 
+### RollingText Group
+
+You can use RollingTextGroup to control the animation of all RollingTexts, and add other element. Please upgrade vant to >= v4.9.0 before using this component.
+
+```html
+<rolling-text-group>
+  <span style="display: inline;">-¥</span>
+  <van-rolling-text :target-num="1" />
+  <van-rolling-text :target-num="9" />
+  <span style="display: inline;">.</span>
+  <van-rolling-text :target-num="9" />
+  <van-rolling-text :target-num="8" />
+</rolling-text-group>
+```
+
 ### Manual Control
 
 After obtaining the component instance through `ref`, you can call the `start` and `reset` methods. The `start` method is used to start the animation, and the `reset` method is used to reset the animation.
@@ -129,7 +145,7 @@ export default {
 
 ## API
 
-### Props
+### RollingText Props
 
 | Attribute | Description | Type | Default |
 | --- | --- | --- | --- |
@@ -142,7 +158,18 @@ export default {
 | stop-order | Order of stopping the animation of each digit, with `ltr` and `rtl` as the values | _string_ | `ltr` |
 | height | Height of digit, `px` as unit | _number_ | `40` |
 
-### Methods
+### RollingTextGroup Props
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| start-num `v4.9.0` | Start number of all RollingTexts | _number_ | `0` |
+| duration `v4.9.0` | Duration of all RollingTexts, in seconds | _number_ | `2` |
+| direction `v4.9.0` | Rolling direction of all RollingTexts, with `down` and `up` as the values | _string_ | `down` |
+| auto-start `v4.9.0` | Whether to start all RollingTexts | _boolean_ | `true` |
+| stop-order `v4.9.0` | Order to stop all RollingTexts, with `ltr` and `rtl` as the values | _string_ | `ltr` |
+| height `v4.9.0` | Height of all RollingTexts, `px` as unit | _number_ | `40` |
+
+### RollingText Methods
 
 Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get RollingText instance and call instance methods.
 
@@ -150,6 +177,15 @@ Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get RollingT
 | ----- | ------------------- | --------- | ------------ |
 | start | Start the animation | -         | -            |
 | reset | Reset the animation | -         | -            |
+
+### RollingTextGroup Methods
+
+Use [ref](https://vuejs.org/guide/essentials/template-refs.html) to get RollingTextGroup instance and call instance methods.
+
+| Name           | Description         | Attribute | Return value |
+| -------------- | ------------------- | --------- | ------------ |
+| start `v4.9.0` | Start the animation | -         | -            |
+| reset `v4.9.0` | Reset the animation | -         | -            |
 
 ### Types
 
@@ -161,18 +197,22 @@ import type {
   RollingTextInstance,
   RollingTextDirection,
   RollingTextStopOrder,
+  RollingTextGroupProps,
+  RollingTextGroupInstance,
 } from 'vant';
 ```
 
-`RollingTextInstance` is the type of component instance:
+`RollingTextInstance` and `RollingTextGroupInstance` is the type of component instance:
 
 ```ts
 import { ref } from 'vue';
-import type { RollingTextInstance } from 'vant';
+import type { RollingTextInstance, RollingTextGroupInstance } from 'vant';
 
 const rollingTextRef = ref<RollingTextInstance>();
+const rollingTextGroupRef = ref<RollingTextGroupInstance>();
 
 rollingTextRef.value?.start();
+rollingTextGroupRef.value?.start();
 ```
 
 ## Theming

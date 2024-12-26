@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import VanRollingText, { type RollingTextInstance } from '..';
+import RollingTextGroup from '../../rolling-text-group';
 import Button from '../../button';
 import { ref } from 'vue';
 import { useTranslate } from '../../../docs/site';
@@ -18,6 +19,7 @@ const t = useTranslate({
     noNumberType: '翻转非数字内容',
     start: '开始',
     reset: '重置',
+    useGroup: '使用翻滚文本组',
   },
   'en-US': {
     direction: 'Set Rolling Direction',
@@ -30,6 +32,7 @@ const t = useTranslate({
     noNumberType: 'Roll Non-numeric Text',
     start: 'Start',
     reset: 'Reset',
+    useGroup: 'Use Group',
   },
 });
 
@@ -37,6 +40,7 @@ const isStart = ref(false);
 const isStart2 = ref(false);
 const isStart3 = ref(false);
 const isStart4 = ref(false);
+const isStartUseGroup = ref(false);
 
 const isStartNoNumberType = ref(false);
 const textList = ref([
@@ -129,6 +133,24 @@ const reset = () => {
     </div>
   </demo-block>
 
+  <demo-block :title="t('useGroup')">
+    <div>
+      <RollingTextGroup :auto-start="isStartUseGroup">
+        <span style="display: inline">-¥</span>
+        <VanRollingText :target-num="1" />
+        <VanRollingText :target-num="9" />
+        <span style="display: inline">.</span>
+        <VanRollingText :target-num="9" />
+        <VanRollingText :target-num="8" />
+      </RollingTextGroup>
+      <div style="margin-top: 10px">
+        <Button @click="() => (isStartUseGroup = true)" type="primary">{{
+          t('start')
+        }}</Button>
+      </div>
+    </div>
+  </demo-block>
+
   <demo-block :title="t('manualControl')">
     <div>
       <VanRollingText
@@ -153,8 +175,15 @@ const reset = () => {
     margin-left: var(--van-padding-md);
   }
 
+  .van-rolling-text-group,
   .van-rolling-text {
     margin-left: var(--van-padding-md);
+  }
+
+  .van-rolling-text-group {
+    .van-rolling-text {
+      margin-left: 0;
+    }
   }
 
   .my-rolling-text {

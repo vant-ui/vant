@@ -10,10 +10,11 @@
 
 ```js
 import { createApp } from 'vue';
-import { RollingText } from 'vant';
+import { RollingText, RollingTextGroup } from 'vant';
 
 const app = createApp();
 app.use(RollingText);
+app.use(RollingTextGroup);
 ```
 
 ## 代码演示
@@ -93,6 +94,21 @@ RollingText 组件提供了一些 CSS 变量，你可以覆盖这些变量来自
 }
 ```
 
+### 翻滚文本组
+
+你可以使用翻滚文本组来控制多个翻滚文本的动画，并且可以加入自定义元素。请升级 vant 到 >= 4.9.0 版本来使用该组件。
+
+```html
+<rolling-text-group>
+  <span style="display: inline;">-¥</span>
+  <van-rolling-text :target-num="1" />
+  <van-rolling-text :target-num="9" />
+  <span style="display: inline;">.</span>
+  <van-rolling-text :target-num="9" />
+  <van-rolling-text :target-num="8" />
+</rolling-text-group>
+```
+
 ### 手动控制
 
 通过 ref 获取到组件实例后，你可以调用 `start`、`reset` 方法，`start` 方法用于开始动画，`reset` 方法用于重置动画。
@@ -129,7 +145,7 @@ export default {
 
 ## API
 
-### Props
+### RollingText Props
 
 | 参数 | 说明 | 类型 | 默认值 |
 | --- | --- | --- | --- |
@@ -142,6 +158,17 @@ export default {
 | stop-order | 各个数位动画停止先后顺序，值为 `ltr` 和 `rtl` | _string_ | `ltr` |
 | height | 数字高度，单位为 `px` | _number_ | `40` |
 
+### RollingTextGroup Props
+
+| 参数 | 说明 | 类型 | 默认值 |
+| --- | --- | --- | --- |
+| start-num `v4.9.0` | 所有翻滚文本的起始数值 | _number_ | `0` |
+| duration `v4.9.0` | 所有翻滚文本的动画时长，单位为秒 | _number_ | `2` |
+| direction `v4.9.0` | 所有翻滚文本的文本翻滚方向，值为 `down` 和 `up` | _string_ | `down` |
+| auto-start `v4.9.0` | 是否自动开始所有翻滚文本动画 | _boolean_ | `true` |
+| stop-order `v4.9.0` | 各个翻滚文本的动画停止先后顺序，值为 `ltr` 和 `rtl` | _string_ | `ltr` |
+| height `v4.9.0` | 所有翻滚文本的数字高度，单位为 `px` | _number_ | `40` |
+
 ### 方法
 
 通过 ref 可以获取到 RollingText 实例并调用实例方法，详见[组件实例方法](#/zh-CN/advanced-usage#zu-jian-shi-li-fang-fa)。
@@ -150,6 +177,15 @@ export default {
 | ------ | -------- | ---- | ------ |
 | start  | 开始动画 | -    | -      |
 | reset  | 重置动画 | -    | -      |
+
+### RollingTextGroup 方法
+
+通过 ref 可以获取到 RollingTextGroup 实例并调用实例方法。
+
+| 方法名         | 说明     | 参数 | 返回值 |
+| -------------- | -------- | ---- | ------ |
+| start `v4.9.0` | 开始动画 | -    | -      |
+| reset `v4.9.0` | 重置动画 | -    | -      |
 
 ### 类型定义
 
@@ -161,18 +197,22 @@ import type {
   RollingTextInstance,
   RollingTextDirection,
   RollingTextStopOrder,
+  RollingTextGroupProps,
+  RollingTextGroupInstance,
 } from 'vant';
 ```
 
-`RollingTextInstance` 是组件实例的类型，用法如下：
+`RollingTextInstance` 和 `RollingTextGroupInstance` 是组件实例的类型，用法如下：
 
 ```ts
 import { ref } from 'vue';
-import type { RollingTextInstance } from 'vant';
+import type { RollingTextInstance, RollingTextGroupInstance } from 'vant';
 
 const rollingTextRef = ref<RollingTextInstance>();
+const rollingTextGroupRef = ref<RollingTextGroupInstance>();
 
 rollingTextRef.value?.start();
+rollingTextGroupRef.value?.start();
 ```
 
 ## 主题定制

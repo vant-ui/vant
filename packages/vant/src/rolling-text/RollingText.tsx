@@ -1,20 +1,23 @@
 import {
   ref,
-  defineComponent,
-  computed,
   watch,
+  computed,
+  defineComponent,
   type ExtractPropTypes,
+  getCurrentInstance,
 } from 'vue';
 
 // Utils
-import { raf } from '@vant/use';
+import { raf, useParent } from '@vant/use';
 import {
-  createNamespace,
-  makeArrayProp,
-  makeNumberProp,
-  makeStringProp,
-  truthProp,
   padZero,
+  truthProp,
+  makeArrayProp,
+  makeStringProp,
+  makeNumberProp,
+  createNamespace,
+  isDef,
+  kebabCase,
 } from '../utils';
 
 // Composables
@@ -22,6 +25,10 @@ import { useExpose } from '../composables/use-expose';
 
 // Components
 import RollingTextItem from './RollingTextItem';
+import {
+  ROLLING_TEXT_KEY,
+  RollingTextGroupProps,
+} from '../rolling-text-group/RollingTextGroup';
 
 // Types
 import {
@@ -53,13 +60,42 @@ export default defineComponent({
   props: rollingTextProps,
 
   setup(props) {
+    const instance = getCurrentInstance();
+    const { parent, index } = useParent(ROLLING_TEXT_KEY);
+
+    const getProp = <K extends keyof RollingTextProps>(
+      key: K,
+    ): RollingTextProps[K] => {
+      if (
+        instance &&
+        instance.vnode.props &&
+        (key in instance.vnode.props || kebabCase(key) in instance.vnode.props)
+      ) {
+        return props[key];
+      }
+      if (
+        parent &&
+        key in parent.props &&
+        isDef(parent.props[key as keyof RollingTextGroupProps])
+      ) {
+        return parent.props[
+          key as keyof RollingTextGroupProps
+        ] as RollingTextProps[K];
+      }
+      return props[key];
+    };
+
+    const startNum = computed(() => {
+      return getProp('startNum');
+    });
+
     const isCustomType = computed(
       () => Array.isArray(props.textList) && props.textList.length,
     );
 
     const itemLength = computed(() => {
       if (isCustomType.value) return props.textList[0].length;
-      return `${Math.max(props.startNum, props.targetNum!)}`.length;
+      return `${Math.max(startNum.value, props.targetNum!)}`.length;
     });
 
     const getTextArrByIdx = (idx: number) => {
@@ -76,7 +112,7 @@ export default defineComponent({
     });
 
     const startNumArr = computed(() =>
-      padZero(props.startNum, itemLength.value).split(''),
+      padZero(startNum.value, itemLength.value).split(''),
     );
 
     const getFigureArr = (i: number) => {
@@ -98,11 +134,20 @@ export default defineComponent({
     };
 
     const getDelay = (i: number, len: number) => {
-      if (props.stopOrder === 'ltr') return 0.2 * i;
+      if (parent) {
+        i = index.value;
+        len = parent.children.length;
+      }
+      const stopOrder = getProp('stopOrder');
+      if (stopOrder === 'ltr') return 0.2 * i;
       return 0.2 * (len - 1 - i);
     };
 
-    const rolling = ref(props.autoStart);
+    const autoStart = computed(() => {
+      return getProp('autoStart');
+    });
+
+    const rolling = ref(autoStart.value);
 
     const start = () => {
       rolling.value = true;
@@ -111,13 +156,13 @@ export default defineComponent({
     const reset = () => {
       rolling.value = false;
 
-      if (props.autoStart) {
+      if (autoStart.value) {
         raf(() => start());
       }
     };
 
     watch(
-      () => props.autoStart,
+      () => autoStart.value,
       (value) => {
         if (value) {
           start();
@@ -137,10 +182,10 @@ export default defineComponent({
             figureArr={
               isCustomType.value ? getTextArrByIdx(i) : getFigureArr(i)
             }
-            duration={props.duration}
-            direction={props.direction}
+            duration={getProp('duration')}
+            direction={getProp('direction')}
             isStart={rolling.value}
-            height={props.height}
+            height={getProp('height')}
             delay={getDelay(i, itemLength.value)}
           />
         ))}
