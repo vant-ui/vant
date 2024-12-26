@@ -15,13 +15,14 @@ import {
   preventDefault,
   createNamespace,
   makeRequiredProp,
+  makeStringProp,
   type Numeric,
 } from '../utils';
 import { getElementTranslateY, findIndexOfEnabledOption } from './utils';
 
 // Composables
-import { useEventListener, useParent } from '@vant/use';
-import { useTouch } from '../composables/use-touch';
+import { useEventListener, useParent, useRect } from '@vant/use';
+import { useTouch, type Direction } from '../composables/use-touch';
 import { useExpose } from '../composables/use-expose';
 
 // Types
@@ -55,6 +56,7 @@ export default defineComponent({
     optionHeight: makeRequiredProp(Number),
     swipeDuration: makeRequiredProp(numericProp),
     visibleOptionNum: makeRequiredProp(numericProp),
+    direction: makeStringProp<Direction>('vertical'),
   },
 
   emits: ['change', 'clickOption', 'scrollInto'],
@@ -65,6 +67,7 @@ export default defineComponent({
     let touchStartTime: number;
     let momentumOffset: number;
     let transitionEndTrigger: null | (() => void);
+    let horSign = 0; // 水平滑动的方向符号
 
     const root = ref<HTMLElement>();
     const wrapper = ref<HTMLElement>();
@@ -159,6 +162,17 @@ export default defineComponent({
       touchStartTime = Date.now();
       momentumOffset = startOffset;
       transitionEndTrigger = null;
+
+      if (props.direction === 'horizontal') {
+        // 根据第一个和最后一个item的位置来判断旋转方向
+        const liNodeList = wrapper.value!.children;
+        horSign = liNodeList.length
+          ? Math.sign(
+              useRect(liNodeList[liNodeList.length - 1]).x -
+                useRect(liNodeList[0]).x,
+            )
+          : 0;
+      }
     };
 
     const onTouchMove = (event: TouchEvent) => {
@@ -168,13 +182,19 @@ export default defineComponent({
 
       touch.move(event);
 
-      if (touch.isVertical()) {
+      if (
+        (props.direction === 'vertical' && touch.isVertical()) ||
+        (props.direction === 'horizontal' && touch.isHorizontal())
+      ) {
         moving = true;
         preventDefault(event, true);
       }
 
       const newOffset = clamp(
-        startOffset + touch.deltaY.value,
+        startOffset +
+          (props.direction === 'horizontal'
+            ? touch.deltaX.value * horSign
+            : touch.deltaY.value),
         -(count() * props.optionHeight),
         props.optionHeight,
       );

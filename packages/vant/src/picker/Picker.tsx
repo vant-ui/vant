@@ -55,6 +55,7 @@ import type {
   PickerToolbarPosition,
 } from './types';
 import { PICKER_GROUP_KEY } from '../picker-group/PickerGroup';
+import { type Direction } from '../composables/use-touch';
 
 export const pickerSharedProps = extend(
   {
@@ -65,6 +66,7 @@ export const pickerSharedProps = extend(
     showToolbar: truthProp,
     swipeDuration: makeNumericProp(1000),
     visibleOptionNum: makeNumericProp(6),
+    direction: makeStringProp<Direction>('vertical'),
   },
   pickerToolbarProps,
 );
@@ -209,6 +211,7 @@ export default defineComponent({
           optionHeight={optionHeight.value}
           swipeDuration={props.swipeDuration}
           visibleOptionNum={props.visibleOptionNum}
+          direction={props.direction}
           onChange={(value: Numeric) => onChange(value, columnIndex)}
           onClickOption={(option: PickerOption) =>
             onClickOption(option, columnIndex)

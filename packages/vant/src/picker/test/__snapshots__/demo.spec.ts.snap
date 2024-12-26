@@ -757,4 +757,104 @@ exports[`should render demo and match snapshot 1`] = `
     </div>
   </div>
 </div>
+<div>
+  <div
+    class="van-cell van-cell--clickable van-field"
+    role="button"
+    tabindex="0"
+  >
+    <div class="van-cell__title van-field__label">
+      <label
+        id="van-field-label"
+        for="van-field-input"
+      >
+        Rotate Left
+      </label>
+    </div>
+    <div class="van-cell__value van-field__value">
+      <div class="van-field__body">
+        <input
+          type="text"
+          id="van-field-input"
+          class="van-field__control"
+          readonly
+          placeholder="Choose City"
+          aria-labelledby="van-field-label"
+        >
+      </div>
+    </div>
+    <i class="van-badge__wrapper van-icon van-icon-arrow van-cell__right-icon">
+    </i>
+  </div>
+  <div
+    class="demo-picker__rotate demo-picker__rotate--left"
+    style="display: none;"
+  >
+    <transition-stub
+      name="van-fade"
+      appear="true"
+      persisted="false"
+      css="true"
+      role="button"
+      tabindex="0"
+    >
+    </transition-stub>
+    <transition-stub
+      name="van-popup-slide-bottom"
+      appear="false"
+      persisted="false"
+      css="true"
+    >
+    </transition-stub>
+  </div>
+  <div
+    class="van-cell van-cell--clickable van-field"
+    role="button"
+    tabindex="0"
+  >
+    <div class="van-cell__title van-field__label">
+      <label
+        id="van-field-label"
+        for="van-field-input"
+      >
+        Rotate Righ
+      </label>
+    </div>
+    <div class="van-cell__value van-field__value">
+      <div class="van-field__body">
+        <input
+          type="text"
+          id="van-field-input"
+          class="van-field__control"
+          readonly
+          placeholder="Choose City"
+          aria-labelledby="van-field-label"
+        >
+      </div>
+    </div>
+    <i class="van-badge__wrapper van-icon van-icon-arrow van-cell__right-icon">
+    </i>
+  </div>
+  <div
+    class="demo-picker__rotate demo-picker__rotate--right"
+    style="display: none;"
+  >
+    <transition-stub
+      name="van-fade"
+      appear="true"
+      persisted="false"
+      css="true"
+      role="button"
+      tabindex="0"
+    >
+    </transition-stub>
+    <transition-stub
+      name="van-popup-slide-bottom"
+      appear="false"
+      persisted="false"
+      css="true"
+    >
+    </transition-stub>
+  </div>
+</div>
 `;

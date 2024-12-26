@@ -799,4 +799,95 @@ exports[`should render demo and match snapshot 1`] = `
     </div>
   </div>
 </div>
+<div>
+  <!--[-->
+  <div
+    class="van-cell van-cell--clickable van-field"
+    role="button"
+    tabindex="0"
+  >
+    <div
+      class="van-cell__title van-field__label"
+      style
+    >
+      <!--[-->
+      <label
+        id="van-field-label"
+        for="van-field-input"
+        style
+      >
+        Rotate Left
+      </label>
+    </div>
+    <div class="van-cell__value van-field__value">
+      <!--[-->
+      <div class="van-field__body">
+        <input
+          type="text"
+          id="van-field-input"
+          class="van-field__control"
+          readonly
+          placeholder="Choose City"
+          aria-labelledby="van-field-label"
+        >
+      </div>
+    </div>
+    <i
+      class="van-badge__wrapper van-icon van-icon-arrow van-cell__right-icon"
+      style
+    >
+      <!--[-->
+    </i>
+  </div>
+  <div
+    class="demo-picker__rotate demo-picker__rotate--left"
+    style="display:none;"
+  >
+    <!--[-->
+  </div>
+  <div
+    class="van-cell van-cell--clickable van-field"
+    role="button"
+    tabindex="0"
+  >
+    <div
+      class="van-cell__title van-field__label"
+      style
+    >
+      <!--[-->
+      <label
+        id="van-field-label"
+        for="van-field-input"
+        style
+      >
+        Rotate Righ
+      </label>
+    </div>
+    <div class="van-cell__value van-field__value">
+      <!--[-->
+      <div class="van-field__body">
+        <input
+          type="text"
+          id="van-field-input"
+          class="van-field__control"
+          readonly
+          placeholder="Choose City"
+          aria-labelledby="van-field-label"
+        >
+      </div>
+    </div>
+    <i
+      class="van-badge__wrapper van-icon van-icon-arrow van-cell__right-icon"
+      style
+    >
+      <!--[-->
+    </i>
+  </div>
+  <div
+    class="demo-picker__rotate demo-picker__rotate--right"
+    style="display:none;"
+  >
+    <!--[-->
+  </div>
+</div>
 `;
