@@ -11,6 +11,7 @@ const t = useTranslate({
     title4: '纵向滚动',
     title5: '自定义滑块大小',
     title6: '自定义指示器',
+    title7: 'RTL 布局',
     message: '当前 Swipe 索引：',
   },
   'en-US': {
@@ -19,6 +20,7 @@ const t = useTranslate({
     title4: 'Vertical Scrolling',
     title5: 'Set SwipeItem Size',
     title6: 'Custom indicator',
+    title7: ' RTL Layout',
     message: 'Current Swipe index:',
   },
 });
@@ -93,6 +95,15 @@ const onChange = (index: number) => showToast(t('message') + index);
       <template #indicator="{ active, total }">
         <div class="custom-indicator">{{ active + 1 }}/{{ total }}</div>
       </template>
+    </van-swipe>
+  </demo-block>
+
+  <demo-block :title="t('title7')">
+    <van-swipe indicator-color="white" style="direction: rtl">
+      <van-swipe-item>1</van-swipe-item>
+      <van-swipe-item>2</van-swipe-item>
+      <van-swipe-item>3</van-swipe-item>
+      <van-swipe-item>4</van-swipe-item>
     </van-swipe>
   </demo-block>
 </template>

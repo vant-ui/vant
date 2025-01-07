@@ -137,6 +137,17 @@ export default {
 </style>
 ```
 
+### RTL Layout
+
+```html
+<van-swipe indicator-color="white" style="direction: rtl;">
+  <van-swipe-item>1</van-swipe-item>
+  <van-swipe-item>2</van-swipe-item>
+  <van-swipe-item>3</van-swipe-item>
+  <van-swipe-item>4</van-swipe-item>
+</van-swipe>
+```
+
 ## API
 
 ### Swipe Props

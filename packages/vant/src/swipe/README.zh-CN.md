@@ -145,6 +145,19 @@ export default {
 </style>
 ```
 
+### RTL 布局
+
+可以通过对上下文或自身样式的direction属性判断调整。
+
+```html
+<van-swipe indicator-color="white" style="direction: rtl;">
+  <van-swipe-item>1</van-swipe-item>
+  <van-swipe-item>2</van-swipe-item>
+  <van-swipe-item>3</van-swipe-item>
+  <van-swipe-item>4</van-swipe-item>
+</van-swipe>
+```
+
 ## API
 
 ### Swipe Props

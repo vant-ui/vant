@@ -360,3 +360,22 @@ test('should emit drag-start and drag-end events correctly', async () => {
   expect(dragEnd).toHaveBeenCalledTimes(2);
   expect(dragEnd).toHaveBeenCalledWith({ index: 0 });
 });
+
+test('should reverse swipe direction when container direction is rtl', async () => {
+  const wrapper = mount({
+    render() {
+      return (
+        <div style="direction: rtl">
+          <Swipe style={swipeStyle}>
+            <SwipeItem>1</SwipeItem>
+            <SwipeItem>2</SwipeItem>
+          </Swipe>
+        </div>
+      );
+    },
+  });
+
+  const track = wrapper.find('.van-swipe__track');
+  await triggerDrag(track, -100, 0);
+  expect(wrapper.html()).toMatchSnapshot();
+});

@@ -236,4 +236,46 @@ exports[`should render demo and match snapshot 1`] = `
     </div>
   </div>
 </div>
+<div>
+  <!--[-->
+  <div
+    class="van-swipe"
+    style="direction:rtl;"
+  >
+    <div
+      style="transition-duration:500ms;transform:translateX(0px);"
+      class="van-swipe__track"
+    >
+      <!--[-->
+      <div
+        class="van-swipe-item"
+        style
+      >
+        <!--[-->
+        1
+      </div>
+      <div
+        class="van-swipe-item"
+        style
+      >
+        <!--[-->
+        2
+      </div>
+      <div
+        class="van-swipe-item"
+        style
+      >
+        <!--[-->
+        3
+      </div>
+      <div
+        class="van-swipe-item"
+        style
+      >
+        <!--[-->
+        4
+      </div>
+    </div>
+  </div>
+</div>
 `;

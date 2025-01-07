@@ -229,3 +229,36 @@ exports[`should render vertical swipe when using vertical prop 1`] = `
   </div>
 </div>
 `;
+
+exports[`should reverse swipe direction when container direction is rtl 1`] = `
+<div style="direction: rtl;">
+  <div
+    class="van-swipe"
+    style="width: 100px; height: 100px;"
+  >
+    <div
+      style="transition-duration: 500ms; transform: translateX(-100px); width: 200px;"
+      class="van-swipe__track"
+    >
+      <div
+        class="van-swipe-item"
+        style="width: 100px;"
+      >
+        1
+      </div>
+      <div
+        class="van-swipe-item"
+        style="width: 100px;"
+      >
+        2
+      </div>
+    </div>
+    <div class="van-swipe__indicators">
+      <i class="van-swipe__indicator">
+      </i>
+      <i class="van-swipe__indicator van-swipe__indicator--active">
+      </i>
+    </div>
+  </div>
+</div>
+`;

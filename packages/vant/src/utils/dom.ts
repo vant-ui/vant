@@ -117,3 +117,11 @@ export function getContainingBlock(el: Element) {
 
   return null;
 }
+
+export function isRtl(elementRef: Element | Ref<Element | undefined>) {
+  const el = unref(elementRef);
+  if (!el) {
+    return false;
+  }
+  return window.getComputedStyle(el).direction === 'rtl';
+}
