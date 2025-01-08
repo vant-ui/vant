@@ -464,11 +464,11 @@ export default defineComponent({
           const compareToStart = compareDay(date, startDay);
 
           if (compareToStart === 1) {
-            const disabledDay = getDisabledDate(
-              disabledDays.value,
-              startDay,
-              date,
-            );
+            const _disabledDays = canSwitch.value
+              ? currentMonthRef.value!.disabledDays.value
+              : disabledDays.value;
+
+            const disabledDay = getDisabledDate(_disabledDays, startDay, date);
 
             if (disabledDay) {
               const endDay = getPrevDay(disabledDay);
