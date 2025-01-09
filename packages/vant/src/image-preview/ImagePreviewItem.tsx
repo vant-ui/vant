@@ -17,6 +17,7 @@ import {
   makeRequiredProp,
   LONG_PRESS_START_TIME,
   type ComponentInstance,
+  makeNumberProp,
 } from '../utils';
 
 // Composables
@@ -57,6 +58,7 @@ const imagePreviewItemProps = {
   closeOnClickImage: Boolean,
   closeOnClickOverlay: Boolean,
   vertical: Boolean,
+  rotateAngle: makeNumberProp(0),
 };
 
 export type ImagePreviewItemProps = ExtractPropTypes<
@@ -87,43 +89,119 @@ export default defineComponent({
 
     let initialMoveY = 0;
 
+    const getRotatedDimensions = (
+      width: number,
+      height: number,
+      angle: number,
+    ) => {
+      const radians = (Math.abs(angle) * Math.PI) / 180;
+      const sin = Math.sin(radians);
+      const cos = Math.cos(radians);
+      const rotatedWidth = Math.abs(width * cos) + Math.abs(height * sin);
+      const rotatedHeight = Math.abs(width * sin) + Math.abs(height * cos);
+      return { width: rotatedWidth, height: rotatedHeight };
+    };
+
+    const getContainScale = computed(() => {
+      if (!state.imageRatio) return 1;
+      const { rootWidth, rootHeight, rotateAngle } = props;
+      const naturalWidth = rootWidth;
+      const naturalHeight = naturalWidth * state.imageRatio;
+      const rotated = getRotatedDimensions(
+        naturalWidth,
+        naturalHeight,
+        rotateAngle,
+      );
+      const scaleX = rootWidth / rotated.width;
+      const scaleY = rootHeight / rotated.height;
+      return Math.min(scaleX, scaleY);
+    });
+    watch(
+      () => props.rotateAngle,
+      () => {
+        adjustPositionAfterRotate();
+      },
+    );
+
+    const adjustPositionAfterRotate = () => {
+      if (state.scale === 1) {
+        state.moveX = 0;
+        state.moveY = isLongImage.value ? initialMoveY : 0;
+        return;
+      }
+      state.moveX = clamp(state.moveX, -maxMoveX.value, maxMoveX.value);
+      state.moveY = clamp(state.moveY, -maxMoveY.value, maxMoveY.value);
+      if (
+        Math.abs(state.moveX) > maxMoveX.value ||
+        Math.abs(state.moveY) > maxMoveY.value
+      ) {
+        state.moveX = 0;
+        state.moveY = 0;
+      }
+    };
+
     const imageStyle = computed(() => {
       const { scale, moveX, moveY, moving, zooming, initializing } = state;
       const style: CSSProperties = {
         transitionDuration: zooming || moving || initializing ? '0s' : '.3s',
       };
 
-      if (scale !== 1 || isLongImage.value) {
-        // use matrix to solve the problem of elements not rendering due to safari optimization
-        style.transform = `matrix(${scale}, 0, 0, ${scale}, ${moveX}, ${moveY})`;
+      const transforms: string[] = [];
+      const actualScale = scale * getContainScale.value;
+
+      if (actualScale !== 1 || isLongImage.value) {
+        transforms.push(
+          `matrix(${actualScale}, 0, 0, ${actualScale}, ${moveX}, ${moveY})`,
+        );
+      }
+
+      if (props.rotateAngle !== 0) {
+        const angle = (props.rotateAngle * Math.PI) / 180;
+        const cos = Math.cos(angle);
+        const sin = Math.sin(angle);
+        transforms.push(`matrix(${cos}, ${sin}, ${-sin}, ${cos}, 0, 0)`);
+      }
+
+      if (transforms.length) {
+        style.transform = transforms.join(' ');
       }
 
       return style;
     });
 
+    // 添加旋转后的尺寸计算
+    const getRotatedImageSize = computed(() => {
+      const { rootWidth } = props;
+      const naturalWidth = rootWidth;
+      const naturalHeight = naturalWidth * state.imageRatio;
+      const { width: rotatedWidth, height: rotatedHeight } =
+        getRotatedDimensions(naturalWidth, naturalHeight, props.rotateAngle);
+      return {
+        width: rotatedWidth,
+        height: rotatedHeight,
+      };
+    });
+
     const maxMoveX = computed(() => {
       if (state.imageRatio) {
-        const { rootWidth, rootHeight } = props;
-        const displayWidth = vertical.value
-          ? rootHeight / state.imageRatio
-          : rootWidth;
+        const { rootWidth } = props;
+        const { width: rotatedWidth } = getRotatedImageSize.value;
+        const scaledWidth = rotatedWidth * state.scale * getContainScale.value;
 
-        return Math.max(0, (state.scale * displayWidth - rootWidth) / 2);
+        return Math.max(0, (scaledWidth - rootWidth) / 2);
       }
-
       return 0;
     });
 
     const maxMoveY = computed(() => {
       if (state.imageRatio) {
-        const { rootWidth, rootHeight } = props;
-        const displayHeight = vertical.value
-          ? rootHeight
-          : rootWidth * state.imageRatio;
+        const { rootHeight } = props;
+        const { height: rotatedHeight } = getRotatedImageSize.value;
+        const scaledHeight =
+          rotatedHeight * state.scale * getContainScale.value;
 
-        return Math.max(0, (state.scale * displayHeight - rootHeight) / 2);
+        return Math.max(0, (scaledHeight - rootHeight) / 2);
       }
-
       return 0;
     });
 

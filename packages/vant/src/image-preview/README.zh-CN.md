@@ -241,6 +241,7 @@ Vant 中导出了以下 ImagePreview 相关的辅助函数：
 | overlayClass | 自定义遮罩层类名 | _string \| Array \| object_ | - |
 | overlayStyle | 自定义遮罩层样式 | _object_ | - |
 | teleport | 指定挂载的节点，等同于 Teleport 组件的 [to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) | _string \| Element_ | - |
+| rotate | 是否开启图片旋转功能 | _boolean_ | `false` |
 
 ### Props
 
@@ -271,6 +272,7 @@ Vant 中导出了以下 ImagePreview 相关的辅助函数：
 | overlay-class | 自定义遮罩层类名 | _string \| Array \| object_ | - |
 | overlay-style | 自定义遮罩层样式 | _object_ | - |
 | teleport | 指定挂载的节点，等同于 Teleport 组件的 [to 属性](https://cn.vuejs.org/api/built-in-components.html#teleport) | _string \| Element_ | - |
+| rotate | 是否开启图片旋转功能 | _boolean_ | `false` |
 
 ### Events
 

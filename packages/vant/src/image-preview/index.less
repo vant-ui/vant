@@ -9,6 +9,9 @@
   --van-image-preview-close-icon-color: var(--van-gray-5);
   --van-image-preview-close-icon-margin: var(--van-padding-md);
   --van-image-preview-close-icon-z-index: 1;
+  --van-image-preview-rotate-icon-size: 22px;
+  --van-image-preview-rotate-button-bottom: 40px;
+  --van-image-preview-rotate-button-gap: 40px;
 }
 
 .van-image-preview {
@@ -110,5 +113,31 @@
       right: var(--van-image-preview-close-icon-margin);
       bottom: var(--van-image-preview-close-icon-margin);
     }
+  }
+
+  &__rotate-buttons {
+    position: absolute;
+    bottom: var(--van-image-preview-rotate-button-bottom);
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 99;
+    display: flex;
+    gap: var(--van-image-preview-rotate-button-gap);
+  }
+
+  &__rotate-button {
+    width: var(--van-image-preview-rotate-icon-size);
+    height: var(--van-image-preview-rotate-icon-size);
+    border-radius: 50%;
+    background: var(--van-image-preview-close-icon-color);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__rotate-icon--reverse {
+    transform: scaleX(-1);
   }
 }
