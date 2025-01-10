@@ -59,8 +59,14 @@ export const genOptions = <T extends string>(
   return filter ? filter(type, options, values) : options;
 };
 
-export const formatValueRange = (values: string[], columns: PickerOption[][]) =>
-  values.map((value, index) => {
+export const formatValueRange = (
+  values: string[],
+  columns: PickerOption[][],
+) => {
+  if (values.length === 0) {
+    return columns.map((column) => column[0]?.value?.toString() ?? '');
+  }
+  return values.map((value, index) => {
     const column = columns[index];
     if (column.length) {
       const minValue = +column[0].value!;
@@ -69,3 +75,4 @@ export const formatValueRange = (values: string[], columns: PickerOption[][]) =>
     }
     return value;
   });
+};

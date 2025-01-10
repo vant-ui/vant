@@ -227,3 +227,38 @@ test('should be displayed correctly when modelValue updated by external sources'
       .selectedValues,
   ).toEqual(['2024', '01']);
 });
+
+test('update modelValue to undefined', async () => {
+  const wrapper = mount(DatePicker, {
+    props: {
+      modelValue: ['2024', '10', '10'],
+    },
+  });
+
+  await wrapper.find('.van-picker__confirm').trigger('click');
+  expect(wrapper.emitted('confirm')?.[0]).toEqual([
+    {
+      selectedOptions: [
+        { text: '2024', value: '2024' },
+        { text: '10', value: '10' },
+        { text: '10', value: '10' },
+      ],
+      selectedValues: ['2024', '10', '10'],
+      selectedIndexes: [10, 9, 9],
+    },
+  ]);
+
+  await wrapper.setProps({ modelValue: undefined });
+  await wrapper.find('.van-picker__confirm').trigger('click');
+  expect(wrapper.emitted('confirm')?.[1]).toEqual([
+    {
+      selectedOptions: [
+        { text: '2014', value: '2014' },
+        { text: '01', value: '01' },
+        { text: '01', value: '01' },
+      ],
+      selectedValues: ['2014', '01', '01'],
+      selectedIndexes: [0, 0, 0],
+    },
+  ]);
+});

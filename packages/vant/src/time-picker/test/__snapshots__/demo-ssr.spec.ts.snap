@@ -5471,46 +5471,6 @@ exports[`should render demo and match snapshot 1`] = `
             class="van-picker-column__item van-picker-column__item--selected"
           >
             <div class="van-ellipsis">
-              00
-            </div>
-          </li>
-          <li
-            role="button"
-            style="height:44px;"
-            tabindex="0"
-            class="van-picker-column__item"
-          >
-            <div class="van-ellipsis">
-              10
-            </div>
-          </li>
-          <li
-            role="button"
-            style="height:44px;"
-            tabindex="0"
-            class="van-picker-column__item"
-          >
-            <div class="van-ellipsis">
-              20
-            </div>
-          </li>
-          <li
-            role="button"
-            style="height:44px;"
-            tabindex="0"
-            class="van-picker-column__item"
-          >
-            <div class="van-ellipsis">
-              30
-            </div>
-          </li>
-          <li
-            role="button"
-            style="height:44px;"
-            tabindex="0"
-            class="van-picker-column__item"
-          >
-            <div class="van-ellipsis">
               40
             </div>
           </li>

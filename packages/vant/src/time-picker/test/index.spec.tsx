@@ -317,3 +317,36 @@ test('should time range when set props max-time', async () => {
     },
   ]);
 });
+
+test('update modelValue to undefined', async () => {
+  const wrapper = mount(TimePicker, {
+    props: {
+      modelValue: ['12', '00'],
+    },
+  });
+
+  await wrapper.find('.van-picker__confirm').trigger('click');
+  expect(wrapper.emitted('confirm')?.[0]).toEqual([
+    {
+      selectedOptions: [
+        { text: '12', value: '12' },
+        { text: '00', value: '00' },
+      ],
+      selectedValues: ['12', '00'],
+      selectedIndexes: [12, 0],
+    },
+  ]);
+
+  await wrapper.setProps({ modelValue: undefined });
+  await wrapper.find('.van-picker__confirm').trigger('click');
+  expect(wrapper.emitted('confirm')?.[1]).toEqual([
+    {
+      selectedOptions: [
+        { text: '00', value: '00' },
+        { text: '00', value: '00' },
+      ],
+      selectedValues: ['00', '00'],
+      selectedIndexes: [0, 0],
+    },
+  ]);
+});
