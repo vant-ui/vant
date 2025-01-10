@@ -170,9 +170,12 @@ export default defineComponent({
     watch(
       () => props.modelValue,
       (newValues) => {
-        newValues = formatValueRange(newValues, columns.value);
-        if (!isSameValue(newValues, currentValues.value)) {
-          currentValues.value = newValues;
+        const _newValues = formatValueRange(newValues, columns.value);
+        if (
+          !isSameValue(_newValues, currentValues.value) ||
+          !isSameValue(_newValues, newValues)
+        ) {
+          currentValues.value = _newValues;
         }
       },
       { immediate: true },
