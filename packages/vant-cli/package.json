@@ -8,7 +8,7 @@
     "vant-cli": "./bin.js"
   },
   "engines": {
-    "node": ">=16.0.0"
+    "node": ">=22.13.0"
   },
   "scripts": {
     "dev": "tsc --watch",
