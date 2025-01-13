@@ -60,7 +60,7 @@
     "@vitejs/plugin-vue-jsx": "^4.1.1",
     "@vue/babel-plugin-jsx": "^1.2.5",
     "autoprefixer": "^10.4.20",
-    "commander": "^12.1.0",
+    "commander": "^13.0.0",
     "rslog": "^1.2.3",
     "esbuild": "^0.24.2",
     "eslint": "^8.57.1",
