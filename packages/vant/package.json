@@ -8,6 +8,39 @@
   "typings": "lib/index.d.ts",
   "unpkg": "lib/vant.min.js",
   "jsdelivr": "lib/vant.min.js",
+  "exports": {
+    ".": {
+      "import": "./es/index.mjs",
+      "require": "./lib/vant.cjs.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./lib": {
+      "import": "./lib/vant.es.js",
+      "require": "./lib/vant.cjs.js",
+      "types": "./lib/index.d.ts"
+    },
+    "./es": {
+      "import": "./es/index.mjs",
+      "types": "./es/index.d.ts"
+    },
+    "./lib/*.js": {
+      "require": "./lib/*.js",
+      "types": "./lib/*.d.ts"
+    },
+    "./es/*.mjs": {
+      "import": "./es/*.mjs",
+      "types": "./es/*.d.ts"
+    },
+    "./lib/*": {
+      "require": "./lib/*/index.js",
+      "types": "./lib/*/index.d.ts"
+    },
+    "./es/*": {
+      "import": "./es/*/index.mjs",
+      "types": "./es/*/index.d.ts"
+    },
+    "./*": "./*"
+  },
   "files": [
     "es",
     "lib"
