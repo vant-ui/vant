@@ -217,3 +217,116 @@ test('should render badge-props prop correctly', async () => {
   const badge = wrapper.find('.van-badge');
   expect(badge.style.backgroundColor).toEqual('blue');
 });
+
+test('should sync v-model when accessing matched route directly', async () => {
+  const onChange = vi.fn();
+  const active = ref(1); // 修改初始值为1，因为要匹配第二个tab
+
+  const wrapper = mount(
+    {
+      setup() {
+        return {
+          active,
+        };
+      },
+      render() {
+        return (
+          <Tabbar route v-model={active.value} onChange={onChange}>
+            <TabbarItem to="/">Tab 1</TabbarItem>
+            <TabbarItem to="/search">Tab 2</TabbarItem>
+            <TabbarItem to="/star">Tab 3</TabbarItem>
+          </Tabbar>
+        );
+      },
+    },
+    {
+      global: {
+        mocks: {
+          // 完善路由模拟对象
+          $route: {
+            path: '/search',
+            name: 'search',
+            matched: [{ path: '/search', name: 'search' }],
+          },
+          $router: {
+            push(to: any) {
+              // 添加实际的路由导航逻辑
+              this.$route.path = typeof to === 'string' ? to : to.path;
+              this.$route.name = typeof to === 'string' ? to : to.name;
+            },
+            replace(to: any) {
+              this.push(to);
+            },
+            $route: {
+              path: '/search',
+              name: 'search',
+              matched: [{ path: '/search', name: 'search' }],
+            },
+          },
+        },
+      },
+    },
+  );
+
+  await nextTick();
+  await later(100); // 增加等待时间确保异步操作完成
+
+  const items = wrapper.findAll('.van-tabbar-item');
+  expect(items[1].classes()).toContain(activeClass);
+  expect(onChange).toHaveBeenCalledWith(1);
+});
+
+test('should not sync v-model when route does not match', async () => {
+  const onChange = vi.fn();
+  const active = ref(-1); // 修改为-1，确保没有任何项被激活
+
+  const wrapper = mount(
+    {
+      setup() {
+        return {
+          active,
+        };
+      },
+      render() {
+        return (
+          <Tabbar route v-model={active.value} onChange={onChange}>
+            <TabbarItem to="/">Tab 1</TabbarItem>
+            <TabbarItem to="/search">Tab 2</TabbarItem>
+          </Tabbar>
+        );
+      },
+    },
+    {
+      global: {
+        mocks: {
+          $route: {
+            path: '/other',
+            name: 'other',
+            matched: [{ path: '/other', name: 'other' }],
+          },
+          $router: {
+            push(to: any) {
+              this.$route.path = typeof to === 'string' ? to : to.path;
+              this.$route.name = typeof to === 'string' ? to : to.name;
+              this.$route.matched = [
+                { path: this.$route.path, name: this.$route.name },
+              ];
+            },
+            replace(to: any) {
+              this.push(to);
+            },
+          },
+        },
+      },
+    },
+  );
+
+  await nextTick();
+  await later(100);
+
+  const items = wrapper.findAll('.van-tabbar-item');
+  items.forEach((item) => {
+    expect(item.classes()).not.toContain(activeClass);
+  });
+  expect(onChange).not.toHaveBeenCalled();
+});

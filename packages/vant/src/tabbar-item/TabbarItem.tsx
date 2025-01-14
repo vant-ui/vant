@@ -4,6 +4,7 @@ import {
   getCurrentInstance,
   type PropType,
   type ExtractPropTypes,
+  watch,
 } from 'vue';
 
 // Utils
@@ -59,15 +60,27 @@ export default defineComponent({
         const { $route } = vm;
         const { to } = props;
         const config = isObject(to) ? to : { path: to };
-        return !!$route.matched.find((val) => {
-          const pathMatched = 'path' in config && config.path === val.path;
-          const nameMatched = 'name' in config && config.name === val.name;
-          return pathMatched || nameMatched;
-        });
+        return $route.matched.some(
+          (val) =>
+            ('path' in config && config.path === val.path) ||
+            ('name' in config && config.name === val.name),
+        );
       }
 
       return (props.name ?? index.value) === modelValue;
     });
+
+    watch(
+      () => vm.$route,
+      () => {
+        // 匹配当前路由时，设置为激活状态
+        const matched = active.value;
+        if (matched) {
+          parent.setActive(props.name ?? index.value, () => {});
+        }
+      },
+      { immediate: true },
+    );
 
     const onClick = (event: MouseEvent) => {
       if (!active.value) {
