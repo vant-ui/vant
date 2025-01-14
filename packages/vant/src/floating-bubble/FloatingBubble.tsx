@@ -110,8 +110,8 @@ export default defineComponent({
       const { width, height } = useRect(rootRef.value!);
       const { offset } = props;
       state.value = {
-        x: offset.x > -1 ? offset.x : windowWidth.value - width - props.gap,
-        y: offset.y > -1 ? offset.y : windowHeight.value - height - props.gap,
+        x: offset.x > -1 ? offset.x : windowWidth.value - width - props.gap + offset.x,
+        y: offset.y > -1 ? offset.y : windowHeight.value - height - props.gap + offset.y,
         width,
         height,
       };
