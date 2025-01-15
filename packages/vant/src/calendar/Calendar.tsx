@@ -115,6 +115,7 @@ export default defineComponent({
     'update:show',
     'clickSubtitle',
     'clickDisabledDate',
+    'clickOverlay',
     'panelChange',
   ],
 
@@ -512,6 +513,8 @@ export default defineComponent({
       }
     };
 
+    const onClickOverlay = (event: MouseEvent) => emit('clickOverlay', event);
+
     const updateShow = (value: boolean) => emit('update:show', value);
 
     const renderMonth = (date: Date, index: number) => {
@@ -654,6 +657,7 @@ export default defineComponent({
             closeOnPopstate={props.closeOnPopstate}
             safeAreaInsetTop={props.safeAreaInsetTop}
             closeOnClickOverlay={props.closeOnClickOverlay}
+            onClickOverlay={onClickOverlay}
             onUpdate:show={updateShow}
           />
         );

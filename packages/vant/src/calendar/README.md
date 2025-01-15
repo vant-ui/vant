@@ -340,6 +340,7 @@ Following props are supported when the type is multiple
 | over-range | Emitted when exceeded max range | - |
 | click-subtitle | Emitted when clicking the subtitle | _event: MouseEvent_ |
 | click-disabled-date `v4.7.0` | Emitted when clicking disabled date | _value: Date \| Date[]_ |
+| click-overlay `v4.9.16` | Emitted when overlay is clicked | _event: MouseEvent_ |
 | panel-change | Emitted when switching calendar panel (effective when `switch mode` is not `none`) | _{ date: Date }_ |
 
 ### Slots

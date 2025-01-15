@@ -531,6 +531,22 @@ test('popup wrapper', async () => {
   expect(wrapper.find('.van-calendar__popup').style.display).toEqual('none');
 });
 
+test('should trigger click-overlay event when overlay is clicked', async () => {
+  const onClickOverlay = vi.fn();
+  const wrapper = mount(Calendar, {
+    props: {
+      minDate,
+      maxDate,
+      defaultDate: minDate,
+      show: true,
+      onClickOverlay,
+    },
+  });
+
+  wrapper.find('.van-overlay').trigger('click');
+  expect(onClickOverlay).toHaveBeenCalled();
+});
+
 test('set show-mark prop to false', async () => {
   const wrapper = mount(Calendar, {
     props: {

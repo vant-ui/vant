@@ -346,6 +346,7 @@ export default {
 | over-range | 范围选择超过最多可选天数时触发 | - |
 | click-subtitle | 点击日历副标题时触发 | _event: MouseEvent_ |
 | click-disabled-date `v4.7.0` | 点击禁用日期时触发 | _value: Date \| Date[]_ |
+| click-overlay `v4.9.16` | 点击遮罩层时触发 | _event: MouseEvent_ |
 | panel-change | 日历面板切换时触发（`switch-mode` 不为 `none` 时生效） | _{ date: Date }_ |
 
 ### Slots
